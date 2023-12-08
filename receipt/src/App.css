@@ -1,0 +1,21 @@
+
+.receipt-container {
+  border: 1px solid orange;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  
+}
+
+
+.app-container {
+  display: flex; 
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
