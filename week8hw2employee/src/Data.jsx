@@ -5,7 +5,7 @@ let data = [
       office: "781-000-0002",
       mobile: "617-000-0002",
       email: "jayking@fakeemail.com",
-      headshot: "./images/headshot0.jpeg",
+      headshot: "../images/headshot0.jpeg", 
       id: 1,
     },
     {
