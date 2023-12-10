@@ -13,7 +13,7 @@ export default function Homepage() {
     useEffect(() => {
       async function getData() {
         try {
-          const response = await fetch(`https://reqres.in/api/users?page=2`);
+          const response = await fetch(`https://reqres.in/api/users`);
           const data = await response.json();
           // console.log(data.data)
           setData(data.data);

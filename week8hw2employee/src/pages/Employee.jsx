@@ -1,63 +1,45 @@
-import React from 'react'
-import  {useEffect, useState} from "react"
-import { useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 
+export default function Employee() {
+  const [data, setData] = useState(null);
+  const [selectedPerson, setSelectedPerson] = useState(null);
+  const { first_name } = useParams();
 
-export default function Employee () {
+  useEffect(() => {
+    async function getData() {
+      try {
+        const response = await fetch('https://reqres.in/api/users?page=2');
+        const parsedResponse = await response.json();
+        setData(parsedResponse.data);
 
-    const [data, setData] = useState (null)
-    let { first_name } = useParams()
-    console.log(first_name)
-
-    
-  
-
-
-    useEffect(() => {
-    
-
-        async function getData () {
-          
-        try{
-        const response = await fetch (`https://reqres.in/api/users?page=2`)
-        const parstResponse = await response.json()
-        setData(parstResponse.data)
-        console.log(parstResponse.data)
-      
-            const person = parstResponse.data.filter((data) => {
-                if (data.first_name == first_name ) {
-                    return true
-                } 
-            })
-            console.log(person)
-            setData(person)
-        } catch(error) {
-          console.log(error)
-        }
-    
-    
+        const person = parsedResponse.data.find((item) => item.first_name === first_name);
+        setSelectedPerson(person);
+      } catch (error) {
+        console.log(error);
       }
-      getData ()
-      console.log(data)
-    }, [])
-    
+    }
+
+    getData();
+  }, [first_name]);
+
   return (
     <div>
-        {data && 
+      {selectedPerson && (
         <div>
-        
-        <h1>Employee</h1>
-        <br />
-        <br />
-        <img src={data[0].avatar}/>
-        <h2>{first_name} {data[0].last_name}</h2>
-        <h2>Email:  {data[0].email}</h2>
-        <Link to={"/"}>
-        <h2>Employee List</h2>
-        </Link>   
-        </div> }
-   
+          <h1>Employee</h1>
+          <br />
+          <br />
+          <img src={selectedPerson.avatar} alt={`${selectedPerson.first_name} Avatar`} />
+          <h2>
+            {selectedPerson.first_name} {selectedPerson.last_name}
+          </h2>
+          <h2>Email: {selectedPerson.email}</h2>
+          <Link to="/">
+            <h2>Employee List</h2>
+          </Link>
+        </div>
+      )}
     </div>
-  )
+  );
 }
